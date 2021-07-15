@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<!-- <nav class="navbar navbar-light bg-light">
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav> -->
+<style>
+    ul {
+        list-style: none;
+    }
+
+    .side-nav-categories {
+        padding: 0px;
+        position: relative;
+        margin-top: 0px;
+        padding-bottom: 0px;
+        background-color: #fff;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #f5f5f5 #eee #d5d5d5 #eee;
+        box-shadow: 0 5px 0 rgba(200, 200, 200, .2);
+        margin-bottom: 30px;
+        width: 250px;
+        margin: auto;
+        top: 10px;
+    }
+
+    .title {
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 0px;
+        padding: 12px 25px 10px 25px;
+        position: relative;
+        display: inline-block;
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        background: #ed6663;
+        margin-top: 0px;
+        margin-left: -10px;
+    }
+
+    .title:before {
+        content: '\f0c9';
+        font-family: FontAwesome;
+    }
+
+    .title:after {
+        content: "";
+        height: 1px;
+        width: 1px;
+        border-style: solid;
+        border-width: 5px;
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        border-color: #d95451 #d95451 transparent transparent;
+    }
+
+    ul#category-tabs {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul#category-tabs li {
+        display: block;
+        position: relative;
+        margin: 0;
+        border-bottom: 1px #ececec solid;
+        padding: 10px 18px;
+    }
+
+    ul.sub-category-tabs li {
+        padding: 2px !important;
+    }
+
+    ul.sub-category-tabs li {
+        border-bottom: 0px !important;
+    }
+
+    ul#category-tabs li a {
+        color: #333;
+        font-weight: 700;
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+
+    ul#category-tabs li a i {
+        top: 12px;
+        right: 18px;
+        position: absolute;
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+        padding: 2px;
+        color: #ed6663;
+    }
+</style>
+<h1 class='text-center heading'>Image Gallery</h1>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class=" col-sm-3">
+            <div class="side-nav-categories">
+                <div class="title"><strong>Category</strong></div>
+                <ul id="category-tabs">
+                    <li><a href="{% url 'gallery'  %}" class="main-category">All Photo</a>
+                    </li>
+                </ul>
+                {% for i in category %}
+                <ul id="category-tabs">
+                    <li><a href="{% url 'category' i.id %}" class="main-category">{{i.name}}</a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+        <a class="btn btn-secondary btn-lg btn-block mt-4"  href="{% url 'upload'  %}">Add Photo</a>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                {% for i in photo %}
+                <div class="col-3 mt-3">
+                    <div class="card">
+                        <a href="{% url 'viewPhoto' i.id %}"><img class="card-img-top" src="{{i.image.url}}" alt="Card image cap"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="text-center">
+    {% if photo.has_other_pages %}
+    <ul class="pagination  ">
+        {% if photo.has_previous %}
+        <li class="mr-3 ml-3"><a href="?page={{ photo.previous_page_number }}">
+                Previous </a>
+        </li>
+        {% else %}
+        <li class="disabled mr-3 ml-3"><span>
+                Previous </span>
+        </li>
+        {% endif %}
+        {% for i in photo.paginator.page_range %}
+        {% if photo.number == i %}
+        <li class="active"><span>{{i}} <span class="sr-only">(current)</span> </span></li>
+        {% else %}
+        <li class="mr-3 ml-3"><a href="?page={{i}}">{{i}}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if photo.has_next %}
+        <li class="mr-3 ml-3"><a href="?page={{ photo.next_page_number }}">Next</a></li>
+        {% else %}
+        <li class="disabled mr-3 ml-3"><span>
+                Next </span>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

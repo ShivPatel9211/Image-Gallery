@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class='container'>
+    <div class='row'>
+        <div class="col-sm-12 col-lg-6  upload ">
+            <h1 class='heading'>Add Photo</h1>
+            <!-- form  -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for i in category %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="{{i.tags}}" value="{{i.tags}}">
+                        <label class="form-check-label" for="inlineCheckbox1">{{i.tags}}</label>
+                    </div>
+                {% endfor %}
+                <div class="mb-3">
+                    <label for="image" class="form-label">Choose</label>
+                    <input type="file" class="form-control" id="image" name="image">
+                  </div>
+                <button type="submit" class="btn btn-primary mb-3">Upload</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

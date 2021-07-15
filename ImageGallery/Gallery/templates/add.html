@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class='container'>
+<div class='row'>
+<div class="col-sm-12 col-lg-6  upload ">
+<h1 class ='heading'>Add Photo</h1>
+      <!-- form  -->
+      <form method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="disabledSelect" class="form-lebel">Catagories</label>
+          <select id="disabledSelect" class="form-control" name="caty">
+          <option value="none" disabled selected>--Select Category--</option>
+            {% for i in category %}
+            <option value="{{i.name}}" >{{i.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="newcaty" class="form-label">Create New Category</label>
+          <input type="text" class="form-control" id="newcaty" placeholder="Enter Category " name="newcaty">
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Choose</label>
+          <input type="file" class="form-control" id="image" name="image">
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Upload</button>
+      </form>
+    </div>
+</div>
+</div>
+
+{% endblock %}
